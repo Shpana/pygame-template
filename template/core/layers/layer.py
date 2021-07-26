@@ -6,14 +6,7 @@ from abc import abstractmethod
 from core.timestep import Timestep
 
 
-class ApplicationContext:
-    pass
-
-
 class Layer:
-
-    def __init__(self, app_context: ApplicationContext) -> NoReturn:
-        self.app_context = app_context
 
     @abstractmethod
     def on_attach(self) -> NoReturn:

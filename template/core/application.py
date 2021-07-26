@@ -2,6 +2,8 @@ import pygame
 
 from typing import NoReturn
 
+from core.application_startup_options import ApplicationStartupOptions
+
 from core.timestep import Timestep
 from core.renderer.window import Window
 from core.renderer.window_viewport import WindowViewSpecification
@@ -13,23 +15,28 @@ from core.layers.layer_stack import LayerStack
 
 class Application:
 
-    def __init__(
-            self, title: str, width: int, height: int, smoothed: bool,
-            viewport_width: int, viewport_height: int) -> NoReturn:
-        self.__prepare_platform()
+    @property
+    def __max_frame_rate(self) -> float:
+        return 60
 
-        self.__layer_stack = LayerStack()
-        self.__running = True
-        self.__title = title
-        self.__resolution = (width, height)
-        self.__max_frame_rate = 60
+    def __init__(self, options: ApplicationStartupOptions) -> NoReturn:
+        self.__options = options
+
+        self.__prepare_platform()
 
         self.__clock = pygame.time.Clock()
 
+        self.__layer_stack = LayerStack()
+        self.__running = True
+        self.__title = self.__options.title
+
         self.__window = Window(
-            title,
-            WindowViewSpecification(self.__resolution, smoothed), (viewport_width, viewport_height)
+            self.__title,
+            WindowViewSpecification(
+                self.__options.resolution, self.__options.is_smoothed), self.__options.viewport_resolution
         )
+
+        # TODO: Избавиться от WindowToolkit.
         self.__window_toolkit = WindowToolkit(self.__window)
 
     @property
