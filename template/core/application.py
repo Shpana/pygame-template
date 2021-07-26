@@ -15,10 +15,6 @@ from core.layers.layer_stack import LayerStack
 
 class Application:
 
-    @property
-    def __max_frame_rate(self) -> float:
-        return 60
-
     def __init__(self, options: ApplicationStartupOptions) -> NoReturn:
         self.__options = options
 
@@ -51,6 +47,10 @@ class Application:
         while self.__running:
             self.__process_main_loop()
         self.__finish_session()
+
+    @property
+    def __max_frame_rate(self) -> float:
+        return 60
 
     def __process_main_loop(self) -> NoReturn:
         render_context = self.__window.render_context
