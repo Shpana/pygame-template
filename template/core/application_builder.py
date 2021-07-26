@@ -1,6 +1,7 @@
 from typing import NoReturn
 
 from core.layers.layer import Layer
+from core.layers.layer_stack import LayerStack
 
 from core.application import Application
 from core.application_startup_options import ApplicationStartupOptions
@@ -13,11 +14,12 @@ class ApplicationBuilder:
         self.__options = self.__default_application_options
 
     def build(self) -> Application:
-        instance = Application(self.__options)
+        layer_stack = LayerStack()
 
         for layer in self.__layers_to_instantiate:
-            instance.add_layer(layer())
-        return instance
+            layer_stack.add_layer(layer())
+
+        return Application(self.__options, layer_stack)
 
     def use_layer(self, layer: Layer) -> 'ApplicationBuilder':
         self.__layers_to_instantiate.append(layer)

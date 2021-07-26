@@ -65,22 +65,3 @@ class WindowViewport:
         # корректное количество раз. И это как раз минимум от отношения нового
         # размера окна и фиксированного, по горизонтали и вертикали.
         self.__scale_factor = min(factor_x, factor_y)
-
-
-class WindowViewSpecification:
-
-    def __init__(self, resolution: tuple[int, int], smoothed: bool) -> NoReturn:
-        self.__smoothed = smoothed
-        self.__resolution = resolution
-
-    @property
-    def is_smoothed(self) -> bool:
-        return self.__smoothed
-
-    @property
-    def resolution(self) -> tuple[int, int]:
-        return self.__resolution
-
-    @property
-    def resolution_as_vector(self) -> pygame.Vector2:
-        return pygame.Vector2(self.__resolution)
