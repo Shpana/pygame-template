@@ -38,7 +38,7 @@ class Application:
     @property
     def window_toolkit(self) -> WindowToolkit:
         return self.__window_toolkit
-        
+
     def run(self) -> NoReturn:
         self.__begin_session()
         while self.__running:
